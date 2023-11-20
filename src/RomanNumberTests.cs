@@ -35,5 +35,4 @@ public class RomanNumberTests
     [InlineData("M", 1000)]
     public void Should_parse_roman_string_to_number(string value, int expected) =>
         Assert.Equal(expected, new RomanNumber(value));
-
 }
