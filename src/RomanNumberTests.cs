@@ -33,7 +33,7 @@ public class RomanNumberTests
     [InlineData("D", 500)]
     [InlineData("CM", 900)]
     [InlineData("M", 1000)]
-    public void Should_parse_roman_string_to_int(string value, int expected) =>
+    public void Should_parse_roman_string_to_number(string value, int expected) =>
         Assert.Equal(expected, new RomanNumber(value));
 
 }
