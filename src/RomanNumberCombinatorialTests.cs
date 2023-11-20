@@ -9,7 +9,7 @@ public class RomanNumberCombinatorialTests
 
     [Theory]
     [MemberData(nameof(CombinatorialTestFactory.RomanStringAndNumbers), MemberType = typeof(CombinatorialTestFactory))]
-    public void Should_parse_all_roman_string_to_int(string value, int expected) =>
+    public void Should_parse_all_roman_string_to_number(string value, int expected) =>
         Assert.Equal(expected, new RomanNumber(value));
 }
 
