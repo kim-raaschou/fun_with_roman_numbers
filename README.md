@@ -12,5 +12,5 @@ Implementeringen er valideret op i mod alle valide romertal, specificeret på [T
 ## Kode Eksempeler
 
 ```csharp
-Assert.Equals(42, new RomanNumber("CXXIII"))
-Assert.Equals("CXXIII", new RomanNumber(42))
+Assert.Equals(42, new RomanNumber("CXXIII"));
+Assert.Equals("CXXIII", new RomanNumber(42));
