@@ -3,33 +3,21 @@ namespace fun_with_roman_numbers;
 public class RomanNumberCombinatorialTests
 {
     [Theory]
-    [MemberData(nameof(CombinatorialTestFactory.RomanNumbersAndStrings), MemberType = typeof(CombinatorialTestFactory))]
-    public void Should_parse_all_roman_number_to_string(int value, string expected) =>
-        Assert.Equal(expected, new RomanNumber(value));
+    [MemberData(nameof(RomanNumbers_from_1_to_3999))]
+    public void Should_parse_all_roman_numbers(int romanNumber, string romanString) =>
+        Assert.Multiple(
+            () => Assert.Equal(romanString, new RomanNumber(romanNumber)),
+            () => Assert.Equal(romanNumber, new RomanNumber(romanString))
+        );
 
-    [Theory]
-    [MemberData(nameof(CombinatorialTestFactory.RomanStringAndNumbers), MemberType = typeof(CombinatorialTestFactory))]
-    public void Should_parse_all_roman_string_to_number(string value, int expected) =>
-        Assert.Equal(expected, new RomanNumber(value));
-}
-
-file class CombinatorialTestFactory
-{
-    private static readonly Dictionary<int, string> Instance = File
+    public static IEnumerable<object[]> RomanNumbers_from_1_to_3999() => File
         .ReadAllLines("oeis_a006968.txt")
         .Skip(14)
-        .Where(line => line?.Trim().Length > 0)
-        .Select(static line =>
+        .Where(line => line.Trim().Length > 0)
+        .Select(static line => line.Split('=') switch
         {
-            var match = line.Split('=');
-            return (Key: int.Parse(match[0].Trim()), Value: match[1].Trim());
-        })
-        .ToDictionary(x => x.Key, x => x.Value);
-
-    public static IEnumerable<object[]> RomanNumbersAndStrings() =>
-        Instance.Select(kv => new object[] { kv.Key, kv.Value });
-
-    public static IEnumerable<object[]> RomanStringAndNumbers() =>
-        Instance.Select(kv => new object[] { kv.Value, kv.Key });
+        [var key, var value] => [int.Parse(key.Trim()), value.Trim()],
+            _ => Array.Empty<object>()
+        });
 }
 
