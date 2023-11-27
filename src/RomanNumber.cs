@@ -4,29 +4,26 @@ namespace fun_with_roman_numbers;
 
 record class RomanNumber
 {
-    private readonly int _intValue = 0;
-    private readonly string _stringValue = "Nan";
-
+    private readonly int _intValue;
+    private readonly string _stringValue;
     public RomanNumber(int value)
     {
         _intValue = value;
-        _stringValue = _intValue is 0 ? "NaN" : Parse(_intValue);
-
-        static string Parse(int number) => number switch
+        _stringValue = _intValue is 0 ? "" : value switch
         {
-            >= 1000 => "M" + Parse(number - 1000),
-            >= 900 => "CM" + Parse(number - 900),
-            >= 500 => "D" + Parse(number - 500),
-            >= 400 => "CD" + Parse(number - 400),
-            >= 100 => "C" + Parse(number - 100),
-            >= 90 => "XC" + Parse(number - 90),
-            >= 50 => "L" + Parse(number - 50),
-            >= 40 => "XL" + Parse(number - 40),
-            >= 10 => "X" + Parse(number - 10),
-            >= 9 => "IX" + Parse(number - 9),
-            >= 5 => "V" + Parse(number - 5),
-            >= 4 => "IV" + Parse(number - 4),
-            >= 1 => "I" + Parse(number - 1),
+            >= 1000 => "M" + new RomanNumber(value - 1000),
+            >= 900 => "CM" + new RomanNumber(value - 900),
+            >= 500 => "D" + new RomanNumber(value - 500),
+            >= 400 => "CD" + new RomanNumber(value - 400),
+            >= 100 => "C" + new RomanNumber(value - 100),
+            >= 90 => "XC" + new RomanNumber(value - 90),
+            >= 50 => "L" + new RomanNumber(value - 50),
+            >= 40 => "XL" + new RomanNumber(value - 40),
+            >= 10 => "X" + new RomanNumber(value - 10),
+            >= 9 => "IX" + new RomanNumber(value - 9),
+            >= 5 => "V" + new RomanNumber(value - 5),
+            >= 4 => "IV" + new RomanNumber(value - 4),
+            >= 1 => "I" + new RomanNumber(value - 1),
             _ => Empty
         };
     }
@@ -34,24 +31,22 @@ record class RomanNumber
     public RomanNumber(string value)
     {
         _stringValue = value;
-        _intValue = Parse(0, _stringValue);
-
-        static int Parse(int sum, string str) => str switch
+        _intValue = value switch
         {
-        ['M', .. var rest] => Parse(sum + 1000, rest),
-        ['C', 'M', .. var rest] => Parse(sum + 900, rest),
-        ['D', .. var rest] => Parse(sum + 500, rest),
-        ['C', 'D', .. var rest] => Parse(sum + 400, rest),
-        ['C', .. var rest] => Parse(sum + 100, rest),
-        ['X', 'C', .. var rest] => Parse(sum + 90, rest),
-        ['L', .. var rest] => Parse(sum + 50, rest),
-        ['X', 'L', .. var rest] => Parse(sum + 40, rest),
-        ['X', .. var rest] => Parse(sum + 10, rest),
-        ['I', 'X', .. var rest] => Parse(sum + 9, rest),
-        ['V', .. var rest] => Parse(sum + 5, rest),
-        ['I', 'V', .. var rest] => Parse(sum + 4, rest),
-        ['I', .. var rest] => Parse(sum + 1, rest),
-            _ => sum
+        ['M', .. var rest] => 1000 + new RomanNumber(rest),
+        ['C', 'M', .. var rest] => 900 + new RomanNumber(rest),
+        ['D', .. var rest] => 500 + new RomanNumber(rest),
+        ['C', 'D', .. var rest] => 400 + new RomanNumber(rest),
+        ['C', .. var rest] => 100 + new RomanNumber(rest),
+        ['X', 'C', .. var rest] => 90 + new RomanNumber(rest),
+        ['L', .. var rest] => 50 + new RomanNumber(rest),
+        ['X', 'L', .. var rest] => 40 + new RomanNumber(rest),
+        ['X', .. var rest] => 10 + new RomanNumber(rest),
+        ['I', 'X', .. var rest] => 9 + new RomanNumber(rest),
+        ['V', .. var rest] => 5 + new RomanNumber(rest),
+        ['I', 'V', .. var rest] => 4 + new RomanNumber(rest),
+        ['I', .. var rest] => 1 + new RomanNumber(rest),
+            _ => 0
         };
     }
 
