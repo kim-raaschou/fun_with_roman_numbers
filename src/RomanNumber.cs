@@ -4,12 +4,12 @@ namespace fun_with_roman_numbers;
 
 readonly record struct RomanNumber
 {
-    private readonly int _intValue;
-    private readonly string _stringValue;
+    private readonly int intValue;
+    private readonly string stringValue;
     public RomanNumber(int value)
     {
-        _intValue = value;
-        _stringValue = value switch
+        intValue = value;
+        stringValue = value switch
         {
             >= 1000 => "M" + new RomanNumber(value - 1000),
             >= 900 => "CM" + new RomanNumber(value - 900),
@@ -30,8 +30,8 @@ readonly record struct RomanNumber
 
     public RomanNumber(string value)
     {
-        _stringValue = value;
-        _intValue = value switch
+        stringValue = value;
+        intValue = value switch
         {
         ['M', .. var rest] => 1000 + new RomanNumber(rest),
         ['C', 'M', .. var rest] => 900 + new RomanNumber(rest),
@@ -51,8 +51,8 @@ readonly record struct RomanNumber
     }
 
     public static implicit operator int(RomanNumber romanNumber)
-        => romanNumber._intValue;
+        => romanNumber.intValue;
 
     public static implicit operator string(RomanNumber romanNumber) 
-        => romanNumber._stringValue;
+        => romanNumber.stringValue;
 }
