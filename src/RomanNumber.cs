@@ -2,7 +2,7 @@ using static System.String;
 
 namespace fun_with_roman_numbers;
 
-record class RomanNumber
+readonly record struct RomanNumber
 {
     private readonly int _intValue;
     private readonly string _stringValue;
@@ -50,7 +50,9 @@ record class RomanNumber
         };
     }
 
-    public static implicit operator int(RomanNumber romanNumber) => romanNumber._intValue;
+    public static implicit operator int(RomanNumber romanNumber)
+        => romanNumber._intValue;
 
-    public static implicit operator string(RomanNumber romanNumber) => romanNumber._stringValue;
+    public static implicit operator string(RomanNumber romanNumber) 
+        => romanNumber._stringValue;
 }
