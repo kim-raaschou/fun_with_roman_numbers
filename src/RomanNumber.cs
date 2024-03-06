@@ -9,7 +9,7 @@ record class RomanNumber
     public RomanNumber(int value)
     {
         _intValue = value;
-        _stringValue = _intValue is 0 ? "" : value switch
+        _stringValue = value switch
         {
             >= 1000 => "M" + new RomanNumber(value - 1000),
             >= 900 => "CM" + new RomanNumber(value - 900),
